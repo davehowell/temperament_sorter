@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="shortcut icon" href="#">
+  <noscript>The temperament sorter requires Javascript to run and Javascript has been disabled in your current browser.</noscript>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
+  //jquery 3.5.1 is latest version but 1 is still available via google's CDN
+  </script>
+  <script>
+    // DavosCollective 2021, 2007, original 2001.
+    // This crude bit of javascript was inspired by various snippets showing how to add up a quiz based on multiple choice.
+    // Its long-winded, but works well. I am sure it could be written a lot shorter, but sometimes you just have to do things step-wise.
+
+    function GetResults() {  // calculates results
+      window.name = "Keirsey";
+
+      //Initalise every variable as 0.
+      //the rb_ are radio button (they are pairs of course),
+      //the letters are for the type pairs (with X1,X2,X3,X4 in case of a tie between each pair)
+      // err and miss for counting errors and missed questions
+      var E = 0, I = 0, S = 0, N = 0, T = 0, F = 0, J = 0, P = 0, X1 = 0, X2 = 0, X3 = 0, X4 = 0
+      var rb_70 = 0, rb_69 = 0, rb_68 = 0, rb_67 = 0, rb_66 = 0, rb_65 = 0, rb_64 = 0, rb_63 = 0, rb_62 = 0, rb_61 = 0
+      var rb_60 = 0, rb_59 = 0, rb_58 = 0, rb_57 = 0, rb_56 = 0, rb_55 = 0, rb_54 = 0, rb_53 = 0, rb_52 = 0, rb_51 = 0
+      var rb_50 = 0, rb_49 = 0, rb_48 = 0, rb_47 = 0, rb_46 = 0, rb_45 = 0, rb_44 = 0, rb_43 = 0, rb_42 = 0, rb_41 = 0
+      var rb_40 = 0, rb_39 = 0, rb_38 = 0, rb_37 = 0, rb_36 = 0, rb_35 = 0, rb_34 = 0, rb_33 = 0, rb_32 = 0, rb_31 = 0
+      var rb_30 = 0, rb_29 = 0, rb_28 = 0, rb_27 = 0, rb_26 = 0, rb_25 = 0, rb_24 = 0, rb_23 = 0, rb_22 = 0, rb_21 = 0
+      var rb_20 = 0, rb_19 = 0, rb_18 = 0, rb_17 = 0, rb_16 = 0, rb_15 = 0, rb_14 = 0, rb_13 = 0, rb_12 = 0, rb_11 = 0
+      var rb_10 = 0, rb_9 = 0, rb_8 = 0, rb_7 = 0, rb_6 = 0, rb_5 = 0, rb_4 = 0, rb_3 = 0, rb_2 = 0, rb_1 = 0
+
+      var err = 0, miss = 0, msg;
+
+      // get a value a or b for each question's radio buttons rb1 to rb70 and put the value in the variables rb_1 to rb_70
+      //'for' loops through both radio buttons for each question.
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb1[i].checked) {
+          var rb_1 = document.Keirsey.rb1[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb2[i].checked) {
+          var rb_2 = document.Keirsey.rb2[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb3[i].checked) {
+          var rb_3 = document.Keirsey.rb3[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb4[i].checked) {
+          var rb_4 = document.Keirsey.rb4[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb5[i].checked) {
+          var rb_5 = document.Keirsey.rb5[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb6[i].checked) {
+          var rb_6 = document.Keirsey.rb6[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb7[i].checked) {
+          var rb_7 = document.Keirsey.rb7[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb8[i].checked) {
+          var rb_8 = document.Keirsey.rb8[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb9[i].checked) {
+          var rb_9 = document.Keirsey.rb9[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb10[i].checked) {
+          var rb_10 = document.Keirsey.rb10[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb11[i].checked) {
+          var rb_11 = document.Keirsey.rb11[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb12[i].checked) {
+          var rb_12 = document.Keirsey.rb12[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb13[i].checked) {
+          var rb_13 = document.Keirsey.rb13[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb14[i].checked) {
+          var rb_14 = document.Keirsey.rb14[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb15[i].checked) {
+          var rb_15 = document.Keirsey.rb15[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb16[i].checked) {
+          var rb_16 = document.Keirsey.rb16[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb17[i].checked) {
+          var rb_17 = document.Keirsey.rb17[i].value;
+        }
+      }
+
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb18[i].checked) {
+          var rb_18 = document.Keirsey.rb18[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb19[i].checked) {
+          var rb_19 = document.Keirsey.rb19[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb20[i].checked) {
+          var rb_20 = document.Keirsey.rb20[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb21[i].checked) {
+          var rb_21 = document.Keirsey.rb21[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb22[i].checked) {
+          var rb_22 = document.Keirsey.rb22[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb23[i].checked) {
+          var rb_23 = document.Keirsey.rb23[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb24[i].checked) {
+          var rb_24 = document.Keirsey.rb24[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb25[i].checked) {
+          var rb_25 = document.Keirsey.rb25[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb26[i].checked) {
+          var rb_26 = document.Keirsey.rb26[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb27[i].checked) {
+          var rb_27 = document.Keirsey.rb27[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb28[i].checked) {
+          var rb_28 = document.Keirsey.rb28[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb29[i].checked) {
+          var rb_29 = document.Keirsey.rb29[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb30[i].checked) {
+          var rb_30 = document.Keirsey.rb30[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb31[i].checked) {
+          var rb_31 = document.Keirsey.rb31[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb32[i].checked) {
+          var rb_32 = document.Keirsey.rb32[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb33[i].checked) {
+          var rb_33 = document.Keirsey.rb33[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb34[i].checked) {
+          var rb_34 = document.Keirsey.rb34[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb35[i].checked) {
+          var rb_35 = document.Keirsey.rb35[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb36[i].checked) {
+          var rb_36 = document.Keirsey.rb36[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb37[i].checked) {
+          var rb_37 = document.Keirsey.rb37[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb38[i].checked) {
+          var rb_38 = document.Keirsey.rb38[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb39[i].checked) {
+          var rb_39 = document.Keirsey.rb39[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb40[i].checked) {
+          var rb_40 = document.Keirsey.rb40[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb41[i].checked) {
+          var rb_41 = document.Keirsey.rb41[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb42[i].checked) {
+          var rb_42 = document.Keirsey.rb42[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb43[i].checked) {
+          var rb_43 = document.Keirsey.rb43[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb44[i].checked) {
+          var rb_44 = document.Keirsey.rb44[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb45[i].checked) {
+          var rb_45 = document.Keirsey.rb45[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb46[i].checked) {
+          var rb_46 = document.Keirsey.rb46[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb47[i].checked) {
+          var rb_47 = document.Keirsey.rb47[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb48[i].checked) {
+          var rb_48 = document.Keirsey.rb48[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb49[i].checked) {
+          var rb_49 = document.Keirsey.rb49[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb50[i].checked) {
+          var rb_50 = document.Keirsey.rb50[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb51[i].checked) {
+          var rb_51 = document.Keirsey.rb51[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb52[i].checked) {
+          var rb_52 = document.Keirsey.rb52[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb53[i].checked) {
+          var rb_53 = document.Keirsey.rb53[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb54[i].checked) {
+          var rb_54 = document.Keirsey.rb54[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb55[i].checked) {
+          var rb_55 = document.Keirsey.rb55[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb56[i].checked) {
+          var rb_56 = document.Keirsey.rb56[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb57[i].checked) {
+          var rb_57 = document.Keirsey.rb57[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb58[i].checked) {
+          var rb_58 = document.Keirsey.rb58[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb59[i].checked) {
+          var rb_59 = document.Keirsey.rb59[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb60[i].checked) {
+          var rb_60 = document.Keirsey.rb60[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb61[i].checked) {
+          var rb_61 = document.Keirsey.rb61[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb62[i].checked) {
+          var rb_62 = document.Keirsey.rb62[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb63[i].checked) {
+          var rb_63 = document.Keirsey.rb63[i].value;
+        }
+      } for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb64[i].checked) {
+          var rb_64 = document.Keirsey.rb64[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb65[i].checked) {
+          var rb_65 = document.Keirsey.rb65[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb66[i].checked) {
+          var rb_66 = document.Keirsey.rb66[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb67[i].checked) {
+          var rb_67 = document.Keirsey.rb67[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb68[i].checked) {
+          var rb_68 = document.Keirsey.rb68[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb69[i].checked) {
+          var rb_69 = document.Keirsey.rb69[i].value;
+        }
+      }
+      for (var i = 0; i < 2; i++) {
+        if (document.Keirsey.rb70[i].checked) {
+          var rb_70 = document.Keirsey.rb70[i].value;
+        }
+      }
+
+      // check for all the picklists have a value in them,
+      //otherwise increment the error counter 'err', and add which question was missed to the error message string 'miss'
+
+      if (rb_1 == 0) {
+        err = 1;
+        miss += '1, ';
+      }
+      if (rb_2 == 0) {
+        err += 1;
+        miss += '2, ';
+      }
+      if (rb_3 == 0) {
+        err += 1;
+        miss += '3, ';
+      }
+      if (rb_4 == 0) {
+        err += 1;
+        miss += '4, ';
+      }
+      if (rb_5 == 0) {
+        err += 1;
+        miss += '5, ';
+      }
+      if (rb_6 == 0) {
+        err += 1;
+        miss += '6, ';
+      }
+      if (rb_7 == 0) {
+        err += 1;
+        miss += '7, ';
+      }
+      if (rb_8 == 0) {
+        err += 1;
+        miss += '8, ';
+      }
+      if (rb_9 == 0) {
+        err += 1;
+        miss += '9, ';
+      }
+      if (rb_10 == 0) {
+        err += 1;
+        miss += '10, ';
+      }
+      if (rb_11 == 0) {
+        err += 1;
+        miss += '11, ';
+      }
+      if (rb_12 == 0) {
+        err += 1;
+        miss += '12, ';
+      }
+      if (rb_13 == 0) {
+        err += 1;
+        miss += '13, ';
+      }
+      if (rb_14 == 0) {
+        err += 1;
+        miss += '14, ';
+      }
+      if (rb_15 == 0) {
+        err += 1;
+        miss += '15, ';
+      }
+      if (rb_16 == 0) {
+        err += 1;
+        miss += '16, ';
+      }
+      if (rb_17 == 0) {
+        err += 1;
+        miss += '17, ';
+      }
+      if (rb_18 == 0) {
+        err += 1;
+        miss += '18, ';
+      }
+      if (rb_19 == 0) {
+        err += 1;
+        miss += '19, ';
+      }
+      if (rb_20 == 0) {
+        err += 1;
+        miss += '20, ';
+      }
+      if (rb_21 == 0) {
+        err += 1;
+        miss += '21, ';
+      }
+      if (rb_22 == 0) {
+        err += 1;
+        miss += '22, ';
+      }
+      if (rb_23 == 0) {
+        err += 1;
+        miss += '23, ';
+      }
+      if (rb_24 == 0) {
+        err += 1;
+        miss += '24, ';
+      }
+      if (rb_25 == 0) {
+        err += 1;
+        miss += '25, ';
+      }
+      if (rb_26 == 0) {
+        err += 1;
+        miss += '26, ';
+      }
+      if (rb_27 == 0) {
+        err += 1;
+        miss += '27, ';
+      }
+      if (rb_28 == 0) {
+        err += 1;
+        miss += '28, ';
+      }
+      if (rb_29 == 0) {
+        err += 1;
+        miss += '29, ';
+      }
+      if (rb_30 == 0) {
+        err += 1;
+        miss += '30, ';
+      }
+      if (rb_31 == 0) {
+        err += 1;
+        miss += '31, ';
+      }
+      if (rb_32 == 0) {
+        err += 1;
+        miss += '32, ';
+      }
+      if (rb_33 == 0) {
+        err += 1;
+        miss += '33, ';
+      }
+      if (rb_34 == 0) {
+        err += 1;
+        miss += '34, ';
+      }
+      if (rb_35 == 0) {
+        err += 1;
+        miss += '35, ';
+      }
+      if (rb_36 == 0) {
+        err += 1;
+        miss += '36, ';
+      }
+      if (rb_37 == 0) {
+        err += 1;
+        miss += '37, ';
+      }
+      if (rb_38 == 0) {
+        err += 1;
+        miss += '38, ';
+      }
+      if (rb_39 == 0) {
+        err += 1;
+        miss += '39, ';
+      }
+      if (rb_40 == 0) {
+        err += 1;
+        miss += '40, ';
+      }
+      if (rb_41 == 0) {
+        err += 1;
+        miss += '41, ';
+      }
+      if (rb_42 == 0) {
+        err += 1;
+        miss += '42, ';
+      }
+      if (rb_43 == 0) {
+        err += 1;
+        miss += '43, ';
+      }
+      if (rb_44 == 0) {
+        err += 1;
+        miss += '44, ';
+      }
+      if (rb_45 == 0) {
+        err += 1;
+        miss += '45, ';
+      }
+      if (rb_46 == 0) {
+        err += 1;
+        miss += '46, ';
+      }
+      if (rb_47 == 0) {
+        err += 1;
+        miss += '47, ';
+      }
+      if (rb_48 == 0) {
+        err += 1;
+        miss += '48, ';
+      }
+      if (rb_49 == 0) {
+        err += 1;
+        miss += '49, ';
+      }
+      if (rb_50 == 0) {
+        err += 1;
+        miss += '50, ';
+
+      }
+      if (rb_51 == 0) {
+        err += 1;
+        miss += '51, ';
+      }
+      if (rb_52 == 0) {
+        err += 1;
+        miss += '52, ';
+      }
+      if (rb_53 == 0) {
+        err += 1;
+        miss += '53, ';
+      }
+      if (rb_54 == 0) {
+        err += 1;
+        miss += '54, ';
+      }
+      if (rb_55 == 0) {
+        err += 1;
+        miss += '55, ';
+      }
+      if (rb_56 == 0) {
+        err += 1;
+        miss += '56, ';
+      }
+      if (rb_57 == 0) {
+        err += 1;
+        miss += '57, ';
+      }
+      if (rb_58 == 0) {
+        err += 1;
+        miss += '58, ';
+      }
+      if (rb_59 == 0) {
+        err += 1;
+        miss += '59, ';
+      }
+      if (rb_60 == 0) {
+        err += 1;
+        miss += '60, ';
+      }
+      if (rb_61 == 0) {
+        err += 1;
+        miss += '61, ';
+      }
+      if (rb_62 == 0) {
+        err += 1;
+        miss += '62, ';
+      }
+      if (rb_63 == 0) {
+        err += 1;
+        miss += '63, ';
+      }
+      if (rb_64 == 0) {
+        err += 1;
+        miss += '64, ';
+      }
+      if (rb_65 == 0) {
+        err += 1;
+        miss += '65, ';
+      }
+      if (rb_66 == 0) {
+        err += 1;
+        miss += '66, ';
+      }
+      if (rb_67 == 0) {
+        err += 1;
+        miss += '67, ';
+      }
+      if (rb_68 == 0) {
+        err += 1;
+        miss += '68, ';
+      }
+      if (rb_69 == 0) {
+        err += 1;
+        miss += '69, ';
+      }
+      if (rb_70 == 0) {
+        err += 1;
+        miss += '70, ';
+      }
+
+      if (err > 0) {
+        miss = miss.slice(1, -2);
+        msg = "You must answer all the questions!  Number of questions you skipped: " + err;
+        msg += "\nQuestion(s) missed include: " + miss;
+
+        alert(msg);
+        open("#reset", "Keirsey");
+      }
+      else {
+
+        //Add up all the E (a answers) 1 8 15 22 29 36 43 50 57 64
+
+        if (rb_1 == 'a') {
+          E += 1
+        }
+        if (rb_8 == 'a') {
+          E += 1
+        }
+        if (rb_15 == 'a') {
+          E += 1
+        }
+        if (rb_22 == 'a') {
+          E += 1
+        }
+        if (rb_29 == 'a') {
+          E += 1
+        }
+        if (rb_36 == 'a') {
+          E += 1
+        }
+        if (rb_43 == 'a') {
+          E += 1
+        }
+        if (rb_50 == 'a') {
+          E += 1
+        }
+        if (rb_57 == 'a') {
+          E += 1
+        }
+
+        if (rb_64 == 'a') {
+          E += 1
+        }
+        //Add up all the I (b answers) for  1 8 15 22 29 36 43 50 57 64
+
+        if (rb_1 == 'b') {
+          I += 1
+        }
+        if (rb_8 == 'b') {
+          I += 1
+        }
+        if (rb_15 == 'b') {
+          I += 1
+        }
+        if (rb_22 == 'b') {
+          I += 1
+        }
+        if (rb_29 == 'b') {
+          I += 1
+        }
+        if (rb_36 == 'b') {
+          I += 1
+        }
+        if (rb_43 == 'b') {
+          I += 1
+        }
+        if (rb_50 == 'b') {
+          I += 1
+        }
+        if (rb_57 == 'b') {
+          I += 1
+        }
+
+        if (rb_64 == 'b') {
+          I += 1
+        }
+        //Add up all the S (a answers) for questions  2 	9  16	23	30	37	44	51	58	65	3	10	17	24	31	38	45	52	59	66
+
+
+        if (rb_2 == 'a') {
+          S += 1
+        }
+        if (rb_9 == 'a') {
+          S += 1
+        }
+        if (rb_16 == 'a') {
+          S += 1
+        }
+        if (rb_23 == 'a') {
+          S += 1
+        }
+        if (rb_30 == 'a') {
+          S += 1
+        }
+        if (rb_37 == 'a') {
+          S += 1
+        }
+        if (rb_44 == 'a') {
+          S += 1
+        }
+        if (rb_51 == 'a') {
+          S += 1
+        }
+        if (rb_58 == 'a') {
+          S += 1
+        }
+        if (rb_65 == 'a') {
+          S += 1
+        }
+        if (rb_3 == 'a') {
+          S += 1
+        }
+        if (rb_10 == 'a') {
+          S += 1
+        }
+        if (rb_17 == 'a') {
+          S += 1
+        }
+        if (rb_24 == 'a') {
+          S += 1
+        }
+        if (rb_31 == 'a') {
+          S += 1
+        }
+        if (rb_38 == 'a') {
+          S += 1
+        }
+        if (rb_45 == 'a') {
+          S += 1
+        }
+        if (rb_52 == 'a') {
+          S += 1
+        }
+        if (rb_59 == 'a') {
+          S += 1
+        }
+
+        if (rb_66 == 'a') {
+          S += 1
+        }
+        //Add up all the N (b answers) for questions  2 	9  16	23	30	37	44	51	58	65	3	10	17	24	31	38	45	52	59	66
+
+        if (rb_2 == 'b') {
+          N += 1
+        }
+        if (rb_9 == 'b') {
+          N += 1
+        }
+        if (rb_16 == 'b') {
+          N += 1
+        }
+        if (rb_23 == 'b') {
+          N += 1
+        }
+        if (rb_30 == 'b') {
+          N += 1
+        }
+        if (rb_37 == 'b') {
+          N += 1
+        }
+        if (rb_44 == 'b') {
+          N += 1
+        }
+        if (rb_51 == 'b') {
+          N += 1
+        }
+        if (rb_58 == 'b') {
+          N += 1
+        }
+        if (rb_65 == 'b') {
+          N += 1
+        }
+        if (rb_3 == 'b') {
+          N += 1
+        }
+        if (rb_10 == 'b') {
+          N += 1
+        }
+        if (rb_17 == 'b') {
+          N += 1
+        }
+        if (rb_24 == 'b') {
+          N += 1
+        }
+        if (rb_31 == 'b') {
+          N += 1
+        }
+        if (rb_38 == 'b') {
+          N += 1
+        }
+        if (rb_45 == 'b') {
+          N += 1
+        }
+        if (rb_52 == 'b') {
+          N += 1
+        }
+        if (rb_59 == 'b') {
+          N += 1
+        }
+
+        if (rb_66 == 'b') {
+          N += 1
+        }
+        //Add up all the T (a answers) for questions  4	11	18	25	32	39	46	53	60	67	5	12	19	26	33	40	47	54	61	68
+
+
+        if (rb_4 == 'a') {
+          T += 1
+        }
+        if (rb_11 == 'a') {
+          T += 1
+        }
+        if (rb_18 == 'a') {
+          T += 1
+        }
+        if (rb_25 == 'a') {
+          T += 1
+        }
+        if (rb_32 == 'a') {
+          T += 1
+        }
+        if (rb_39 == 'a') {
+          T += 1
+        }
+        if (rb_46 == 'a') {
+          T += 1
+        }
+        if (rb_53 == 'a') {
+          T += 1
+        }
+        if (rb_60 == 'a') {
+          T += 1
+        }
+        if (rb_67 == 'a') {
+          T += 1
+        }
+        if (rb_5 == 'a') {
+          T += 1
+        }
+        if (rb_12 == 'a') {
+          T += 1
+        }
+        if (rb_19 == 'a') {
+          T += 1
+        }
+        if (rb_26 == 'a') {
+          T += 1
+        }
+        if (rb_33 == 'a') {
+          T += 1
+        }
+        if (rb_40 == 'a') {
+          T += 1
+        }
+        if (rb_47 == 'a') {
+          T += 1
+        }
+        if (rb_54 == 'a') {
+          T += 1
+        }
+        if (rb_61 == 'a') {
+          T += 1
+        }
+
+        if (rb_68 == 'a') {
+          T += 1
+        }
+        //Add up all the F (b answers) for questions  4	11	18	25	32	39	46	53	60	67	5	12	19	26	33	40	47	54	61	68
+
+
+        if (rb_4 == 'b') {
+          F += 1
+        }
+        if (rb_11 == 'b') {
+          F += 1
+        }
+        if (rb_18 == 'b') {
+          F += 1
+        }
+        if (rb_25 == 'b') {
+          F += 1
+        }
+        if (rb_32 == 'b') {
+          F += 1
+        }
+        if (rb_39 == 'b') {
+          F += 1
+        }
+        if (rb_46 == 'b') {
+          F += 1
+        }
+        if (rb_53 == 'b') {
+          F += 1
+        }
+        if (rb_60 == 'b') {
+          F += 1
+        }
+        if (rb_67 == 'b') {
+          F += 1
+        }
+        if (rb_5 == 'b') {
+          F += 1
+        }
+        if (rb_12 == 'b') {
+          F += 1
+        }
+        if (rb_19 == 'b') {
+          F += 1
+        }
+        if (rb_26 == 'b') {
+          F += 1
+        }
+        if (rb_33 == 'b') {
+          F += 1
+        }
+        if (rb_40 == 'b') {
+          F += 1
+        }
+        if (rb_47 == 'b') {
+          F += 1
+        }
+        if (rb_54 == 'b') {
+          F += 1
+        }
+        if (rb_61 == 'b') {
+          F += 1
+        }
+
+        if (rb_68 == 'b') {
+          F += 1
+        }
+        //Add up all the J (a answers) to questions 6	13	20	27	34	41	48	55	62	69	7	14	21	28	35	42	49	56	63	70
+
+
+        if (rb_6 == 'a') {
+          J += 1
+        }
+        if (rb_13 == 'a') {
+          J += 1
+        }
+        if (rb_20 == 'a') {
+          J += 1
+        }
+        if (rb_27 == 'a') {
+          J += 1
+        }
+        if (rb_34 == 'a') {
+          J += 1
+        }
+        if (rb_41 == 'a') {
+          J += 1
+        }
+        if (rb_48 == 'a') {
+          J += 1
+        }
+        if (rb_55 == 'a') {
+          J += 1
+        }
+        if (rb_62 == 'a') {
+          J += 1
+        }
+
+        if (rb_69 == 'a') {
+          J += 1
+        }
+        if (rb_7 == 'a') {
+          J += 1
+        }
+        if (rb_14 == 'a') {
+          J += 1
+        }
+        if (rb_21 == 'a') {
+          J += 1
+        }
+        if (rb_28 == 'a') {
+          J += 1
+        }
+        if (rb_35 == 'a') {
+          J += 1
+        }
+        if (rb_42 == 'a') {
+          J += 1
+        }
+        if (rb_49 == 'a') {
+          J += 1
+        }
+        if (rb_56 == 'a') {
+          J += 1
+        }
+        if (rb_63 == 'a') {
+          J += 1
+        }
+
+        if (rb_70 == 'a') {
+          J += 1
+        }
+        //Add up all the P (b answers) to questions  6	13	20	27	34	41	48	55	62	69	7	14	21	28	35	42	49	56	63	70
+
+
+        if (rb_6 == 'b') {
+          P += 1
+        }
+        if (rb_13 == 'b') {
+          P += 1
+        }
+        if (rb_20 == 'b') {
+          P += 1
+        }
+        if (rb_27 == 'b') {
+          P += 1
+        }
+        if (rb_34 == 'b') {
+          P += 1
+        }
+        if (rb_41 == 'b') {
+          P += 1
+        }
+        if (rb_48 == 'b') {
+          P += 1
+        }
+        if (rb_55 == 'b') {
+          P += 1
+        }
+        if (rb_62 == 'b') {
+          P += 1
+        }
+
+        if (rb_69 == 'b') {
+          P += 1
+        }
+        if (rb_7 == 'b') {
+          P += 1
+        }
+        if (rb_14 == 'b') {
+          P += 1
+        }
+        if (rb_21 == 'b') {
+          P += 1
+        }
+        if (rb_28 == 'b') {
+          P += 1
+        }
+        if (rb_35 == 'b') {
+          P += 1
+        }
+        if (rb_42 == 'b') {
+          P += 1
+        }
+        if (rb_49 == 'b') {
+          P += 1
+        }
+        if (rb_56 == 'b') {
+          P += 1
+        }
+        if (rb_63 == 'b') {
+          P += 1
+        }
+
+        if (rb_70 == 'b') {
+          P += 1
+        }
+        // write the results - change these to E/I etc
+        document.Keirsey.txtE.value = E
+        document.Keirsey.txtI.value = I
+        document.Keirsey.txtS.value = S
+        document.Keirsey.txtN.value = N
+        document.Keirsey.txtT.value = T
+        document.Keirsey.txtF.value = F
+        document.Keirsey.txtJ.value = J
+        document.Keirsey.txtP.value = P
+
+        // determine the dominant member of the 4 pairs, or if equal denote the pair an X
+
+        //Check EI pair
+        if (E == I) {
+          document.Keirsey.txtEI.value = 'X'
+        }
+        if (E > I) {
+          document.Keirsey.txtEI.value = 'E'
+        }
+        if (E < I) {
+          document.Keirsey.txtEI.value = 'I'
+        }
+
+        //Check SN pair
+        if (S == N) {
+          document.Keirsey.txtSN.value = 'X'
+        }
+        if (S > N) {
+          document.Keirsey.txtSN.value = 'S'
+        }
+        if (S < N) {
+          document.Keirsey.txtSN.value = 'N'
+        }
+
+        //Check TF pair
+        if (T == F) {
+          document.Keirsey.txtTF.value = 'X'
+        }
+        if (T > F) {
+          document.Keirsey.txtTF.value = 'T'
+        }
+        if (T < F) {
+          document.Keirsey.txtTF.value = 'F'
+        }
+
+        //Check JP pair
+        if (J == P) {
+          document.Keirsey.txtJP.value = 'X'
+        }
+        if (J > P) {
+          document.Keirsey.txtJP.value = 'J'
+        }
+        if (J < P) {
+          document.Keirsey.txtJP.value = 'P'
+        }
+
+        open("#results", "Keirsey");
+      }
+
+    }
+    function Reset() {  // navigates to top of form -reset is an anchor
+
+      window.name = "Keirsey";
+      open("#reset", "Keirsey");
+    }
+
+
+    jQuery(document).ready(function () {
+      jQuery('.style9 input').click(function () {
+        var ival = jQuery(this).val();
+        jQuery(this).parent().find('.diamond-true').remove();
+        if (ival == 'a') {
+          jQuery(this).parent().next().find('.diamond-true').addClass('diamond').removeClass('diamond-true');
+        } else {
+          jQuery(this).parent().prev().find('.diamond-true').addClass('diamond').removeClass('diamond-true');
+        }
+        jQuery(this).parent().append('<span class="diamond-true"></span>');
+        jQuery(this).parent().find('.diamond').remove();
+      });
+    });
+  </script>
+  <style>
+    .style9 input {
+      top: 5px;
+    }
+
+    .diamond,
+    .diamond-true {
+      margin: 5px 15px 0 0;
+    }
+  </style>
+  <style>
+    .style9 .answer {
+      position: relative;
+    }
+
+    .style9 input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 30px;
+      height: 30px;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    .diamond {
+      width: 0;
+      height: 0;
+      display: block;
+      border: 15px solid transparent;
+      border-bottom-color: white;
+      position: relative;
+      top: -15px;
+      float: left;
+    }
+
+    .diamond:after {
+      content: '';
+      position: absolute;
+      left: -15px;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border: 15px solid transparent;
+      border-top-color: white;
+    }
+
+    .diamond-true {
+      width: 0;
+      height: 0;
+      display: block;
+      border: 15px solid transparent;
+      border-bottom-color: gray;
+      position: relative;
+      top: -15px;
+      float: left;
+    }
+
+    .diamond-true:after {
+      content: '';
+      position: absolute;
+      left: -15px;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border: 15px solid transparent;
+      border-top-color: gray;
+
+    }
+
+    .diamond:hover,
+    .diamond-true:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+  <table width="550" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><a name="reset"></a>
+        <form name="Keirsey" id="Keirsey" method="post" action="">
+          <div class="style9"><strong>1. At a party do you</strong>
+            <div class="answer"><input name="rb1" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) interact with many, including strangers</div>
+            <div class="answer"><input name="rb1" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) interact with a few, known to you
+            </div>
+          </div>
+          <div class="style9"><strong>2. Are you more</strong>
+            <div class="answer"><input name="rb2" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) realistic than speculative</div>
+            <div class="answer"><input name="rb2" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) speculative than realistic
+            </div>
+          </div>
+          <div class="style9"><strong>3. Is it worse to</strong>
+            <div class="answer"><input name="rb3" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) have your &quot;head in the clouds&quot;</div>
+            <div class="answer"><input name="rb3" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) be &quot;in a rut&quot;
+            </div>
+          </div>
+          <div class="style9"><strong>4. Are you more impressed by</strong>
+            <div class="answer"><input name="rb4" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) principles</div>
+            <div class="answer"><input name="rb4" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) emotions
+            </div>
+          </div>
+          <div class="style9"><strong>5. Are you more drawn towards the</strong>
+            <div class="answer"><input name="rb5" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) convincing</div>
+            <div class="answer"><input name="rb5" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) touching
+            </div>
+          </div>
+          <div class="style9"><strong>6. Do you prefer to work</strong>
+            <div class="answer"><input name="rb6" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) to deadlines</div>
+            <div class="answer"><input name="rb6" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) just &quot;whenever&quot;
+            </div>
+          </div>
+          <div class="style9"><strong>7. Do you tend to choose</strong>
+            <div class="answer"><input name="rb7" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) rather carefully </div>
+            <div class="answer"><input name="rb7" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) somewhat impulsively
+            </div>
+          </div>
+          <div class="style9"><strong>8. At parties do you </strong>
+            <div class="answer"><input name="rb8" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) stay late, with increasing energy </div>
+            <div class="answer"><input name="rb8" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) leave early, with decreased energy
+            </div>
+          </div>
+          <div class="style9"><strong>9. Are you more attracted to </strong>
+            <div class="answer"><input name="rb9" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) sensible people </div>
+            <div class="answer"><input name="rb9" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) imaginitive people
+            </div>
+          </div>
+          <div class="style9"><strong>10. Are you more interested in </strong>
+            <div class="answer"><input name="rb10" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) what is actual </div>
+            <div class="answer"><input name="rb10" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) what is possible
+            </div>
+          </div>
+          <div class="style9"><strong>11. In judging others are you more swayed by </strong>
+            <div class="answer"><input name="rb11" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) laws than circumstances </div>
+            <div class="answer"><input name="rb11" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) circumstances than laws
+            </div>
+          </div>
+          <div class="style9"><strong>12. In approaching others is your inclination to be somewhat </strong>
+            <div class="answer"><input name="rb12" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) objective </div>
+            <div class="answer"><input name="rb12" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) personal
+            </div>
+          </div>
+          <div class="style9"><strong>13. Are you more </strong>
+            <div class="answer"><input name="rb13" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) punctual </div>
+            <div class="answer"><input name="rb13" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) leisurely
+            </div>
+          </div>
+          <div class="style9"><strong>14. Does it bother you more having things </strong>
+            <div class="answer"><input name="rb14" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) incomplete </div>
+            <div class="answer"><input name="rb14" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) completed
+            </div>
+          </div>
+          <div class="style9"><strong>15. In your social groups do you </strong>
+            <div class="answer"><input name="rb15" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) keep abreast of other's happenings </div>
+            <div class="answer"><input name="rb15" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) get behind on the news
+            </div>
+          </div>
+          <div class="style9"><strong>16. In doing ordinary things are you more likely to </strong>
+            <div class="answer"><input name="rb16" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) do it the usual way </div>
+            <div class="answer"><input name="rb16" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) do it your own way
+            </div>
+          </div>
+          <div class="style9"><strong>17. Writers should </strong>
+            <div class="answer"><input name="rb17" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) &quot;say what they mean and mean what they say&quot; </div>
+            <div class="answer"><input name="rb17" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) express things more by use of analogy
+            </div>
+          </div>
+          <div class="style9"><strong>18. Which appeals to you more </strong>
+            <div class="answer"><input name="rb18" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) consistency of thought </div>
+            <div class="answer"><input name="rb18" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) harmonious human relationships
+            </div>
+          </div>
+          <div class="style9"><strong>19. Are you more comfortable in making </strong>
+            <div class="answer"><input name="rb19" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) logical judgements </div>
+            <div class="answer"><input name="rb19" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) value judgements
+            </div>
+          </div>
+          <div class="style9"><strong>20. Do you want things </strong>
+            <div class="answer"><input name="rb20" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) settled and decided </div>
+            <div class="answer"><input name="rb20" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) unsettled and undecided
+            </div>
+          </div>
+          <div class="style9"><strong>21. Would you say you are more </strong>
+            <div class="answer"><input name="rb21" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) serious and determined </div>
+            <div class="answer"><input name="rb21" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) easy-going
+            </div>
+          </div>
+          <div class="style9"><strong>22. In phoning do you </strong>
+            <div class="answer"><input name="rb22" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) rarely question that it will all be said </div>
+            <div class="answer"><input name="rb22" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) rehearse what you'll say
+            </div>
+          </div>
+          <div class="style9"><strong>23. Facts </strong>
+            <div class="answer"><input name="rb23" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) &quot;speak for themselves&quot; </div>
+            <div class="answer"><input name="rb23" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) illustrate principles
+            </div>
+          </div>
+          <div class="style9"><strong>24. Are visionaries </strong>
+            <div class="answer"><input name="rb24" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) somewhat annoying </div>
+            <div class="answer"><input name="rb24" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) rather fascinating
+            </div>
+          </div>
+          <div class="style9"><strong>25. Are you more often </strong>
+            <div class="answer"><input name="rb25" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) a cool-headed person </div>
+            <div class="answer"><input name="rb25" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) a warm-hearted person
+            </div>
+          </div>
+          <div class="style9"><strong>26. Is it worse to be </strong>
+            <div class="answer"><input name="rb26" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) unjust </div>
+            <div class="answer"><input name="rb26" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) merciless
+            </div>
+          </div>
+          <div class="style9"><strong>27. Should one usually let events occur </strong>
+            <div class="answer"><input name="rb27" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) by careful selection and choice </div>
+            <div class="answer"><input name="rb27" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) randomly and by chance
+            </div>
+          </div>
+          <div class="style9"><strong>28. Do you feel better about </strong>
+            <div class="answer"><input name="rb28" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) having purchased </div>
+            <div class="answer"><input name="rb28" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) having the option to buy
+            </div>
+          </div>
+          <div class="style9"><strong>29. In company do you </strong>
+            <div class="answer"><input name="rb29" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) initiate conversation </div>
+            <div class="answer"><input name="rb29" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) wait to be approached
+            </div>
+          </div>
+          <div class="style9"><strong>30. Common sense is </strong>
+            <div class="answer"><input name="rb30" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) rarely questionable </div>
+            <div class="answer"><input name="rb30" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) frequently questionable
+            </div>
+          </div>
+          <div class="style9"><strong>31.Children often do not </strong>
+            <div class="answer"><input name="rb31" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) make themselves useful enough </div>
+            <div class="answer"><input name="rb31" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) exercise their fantasy enough
+            </div>
+          </div>
+          <div class="style9"><strong>32. In making decisions do you feel more comfortable with </strong>
+            <div class="answer"><input name="rb32" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) standards </div>
+            <div class="answer"><input name="rb32" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) feelings
+            </div>
+          </div>
+          <div class="style9"><strong>33. Are you more </strong>
+            <div class="answer"><input name="rb33" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) firm than gentle </div>
+            <div class="answer"><input name="rb33" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) gentle than firm
+            </div>
+          </div>
+          <div class="style9"><strong>34. Which is more admirable </strong>
+            <div class="answer"><input name="rb34" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) the ability to organise and be methodical </div>
+            <div class="answer"><input name="rb34" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) the ability to adapt and make do
+            </div>
+          </div>
+          <div class="style9"><strong>35. Do you put more value on the </strong>
+            <div class="answer"><input name="rb35" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) definite </div>
+            <div class="answer"><input name="rb35" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) open-ended
+            </div>
+          </div>
+          <div class="style9"><strong>36. Does new and non-routine interaction with others </strong>
+            <div class="answer"><input name="rb36" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) stimulate and energise you </div>
+            <div class="answer"><input name="rb36" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) tax your reserves
+            </div>
+          </div>
+          <div class="style9"><strong>37. Are you more frequently</strong>
+            <div class="answer"><input name="rb37" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) a practical sort of person </div>
+            <div class="answer"><input name="rb37" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) a fanciful sort of person
+            </div>
+          </div>
+          <div class="style9"><strong>38. Are you more likely to</strong>
+            <div class="answer"><input name="rb38" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) see how others are useful </div>
+            <div class="answer"><input name="rb38" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) see how others see
+            </div>
+          </div>
+          <div class="style9"><strong>39. Which is more satisfying:</strong>
+            <div class="answer"><input name="rb39" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) to discuss an issue thoroughly</div>
+            <div class="answer"><input name="rb39" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) to arrive at agreement on an issue
+            </div>
+          </div>
+          <div class="style9"><strong>40.Which rules you more: </strong>
+            <div class="answer"><input name="rb40" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) your head </div>
+            <div class="answer"><input name="rb40" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) your heart
+            </div>
+          </div>
+          <div class="style9"><strong>41. Are you more comfortable with work that is </strong>
+            <div class="answer"><input name="rb41" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) contracted </div>
+            <div class="answer"><input name="rb41" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) done on a casual basis
+            </div>
+          </div>
+          <div class="style9"><strong>42. Do you tend to look for </strong>
+            <div class="answer"><input name="rb42" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) the orderly </div>
+            <div class="answer"><input name="rb42" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) whatever turns up
+            </div>
+          </div>
+          <div class="style9"><strong>43. Do you prefer </strong>
+            <div class="answer"><input name="rb43" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) many friends with brief contact </div>
+            <div class="answer"><input name="rb43" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) a few friends with more lengthy contact
+            </div>
+          </div>
+          <div class="style9"><strong>44. Do you go more by </strong>
+            <div class="answer"><input name="rb44" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) facts </div>
+            <div class="answer"><input name="rb44" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) principles
+            </div>
+          </div>
+          <div class="style9"><strong>45. Are you more interested in </strong>
+            <div class="answer"><input name="rb45" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) production and distribution </div>
+            <div class="answer"><input name="rb45" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) design and research
+            </div>
+          </div>
+          <div class="style9"><strong>46. Which is more of a compliment </strong>
+            <div class="answer"><input name="rb46" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) &quot;There is a very logical person.&quot; </div>
+            <div class="answer"><input name="rb46" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) &quot;There is a very sentimental person.&quot;
+            </div>
+          </div>
+          <div class="style9"><strong>47. Do you value in yourself more that you are </strong>
+            <div class="answer"><input name="rb47" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) unwavering</div>
+            <div class="answer"><input name="rb47" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) devoted
+            </div>
+          </div>
+          <div class="style9"><strong>48. Do you more often prefer the </strong>
+            <div class="answer"><input name="rb48" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) final and unalterable statement </div>
+            <div class="answer"><input name="rb48" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) tentative and preliminary statement
+            </div>
+          </div>
+          <div class="style9"><strong>49. Are you more comfortable </strong>
+            <div class="answer"><input name="rb49" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) after a decision </div>
+            <div class="answer"><input name="rb49" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) before a decision
+            </div>
+          </div>
+          <div class="style9"><strong>50. Do you </strong>
+            <div class="answer"><input name="rb50" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) speak easily and at length with strangers </div>
+            <div class="answer"><input name="rb50" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) find little to say to strangers
+            </div>
+          </div>
+          <div class="style9"><strong>51. Are you more likely to trust your </strong>
+            <div class="answer"><input name="rb51" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) experience </div>
+            <div class="answer"><input name="rb51" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) hunch
+            </div>
+          </div>
+          <div class="style9"><strong>52. Do you feel </strong>
+            <div class="answer"><input name="rb52" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) more practical than ingenious </div>
+            <div class="answer"><input name="rb52" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) more ingenious than practical
+            </div>
+          </div>
+          <div class="style9"><strong>53. Which person is more to be complimented: one of </strong>
+            <div class="answer"><input name="rb53" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) clear reason </div>
+            <div class="answer"><input name="rb53" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) strong feeling
+            </div>
+          </div>
+          <div class="style9"><strong>54. Are you inclined more to be </strong>
+            <div class="answer"><input name="rb54" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) fair-minded </div>
+            <div class="answer"><input name="rb54" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) sympathetic
+            </div>
+          </div>
+          <div class="style9"><strong>55. Is it preferable mostly to </strong>
+            <div class="answer"><input name="rb55" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) make sure things are arranged </div>
+            <div class="answer"><input name="rb55" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) just let things happen
+            </div>
+          </div>
+          <div class="style9"><strong>56. In relationships should most things be </strong>
+            <div class="answer"><input name="rb56" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) renegotiable </div>
+            <div class="answer"><input name="rb56" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) random and circumstantial
+            </div>
+          </div>
+          <div class="style9"><strong>57. When the phone rings do you </strong>
+            <div class="answer"><input name="rb57" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) hasten to get it first </div>
+            <div class="answer"><input name="rb57" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) hope someone else will answer it
+            </div>
+          </div>
+          <div class="style9"><strong>58. Do you prize more in yourself </strong>
+            <div class="answer"><input name="rb58" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) a strong sense of reality </div>
+            <div class="answer"><input name="rb58" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) a vivid imagination
+            </div>
+          </div>
+          <div class="style9"><strong>59. Are you drawn more to </strong>
+            <div class="answer"><input name="rb59" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) fundamentals </div>
+            <div class="answer"><input name="rb59" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) overtones
+            </div>
+          </div>
+          <div class="style9"><strong>60. Which seems the greater error: </strong>
+            <div class="answer"><input name="rb60" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) to be too passionate </div>
+            <div class="answer"><input name="rb60" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) to be too objective
+            </div>
+          </div>
+          <div class="style9"><strong>61. Do you see yourself as basically </strong>
+            <div class="answer"><input name="rb61" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) hard-headed </div>
+            <div class="answer"><input name="rb61" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) soft-hearted
+            </div>
+          </div>
+          <div class="style9"><strong>62. Which situation appeals to you more </strong>
+            <div class="answer"><input name="rb62" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) the structured and scheduled </div>
+            <div class="answer"><input name="rb62" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) the unstructured and unscheduled
+            </div>
+          </div>
+          <div class="style9"><strong>63. Are you a person that is more </strong>
+            <div class="answer"><input name="rb63" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) routinised than whimsical </div>
+            <div class="answer"><input name="rb63" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) whimsical than routinised
+            </div>
+          </div>
+          <div class="style9"><strong>64. Are you inclined to be </strong>
+            <div class="answer"><input name="rb64" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) easy to approach </div>
+            <div class="answer"><input name="rb64" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) somewhat reserved
+            </div>
+          </div>
+          <div class="style9"><strong>65. In writings do you prefer </strong>
+            <div class="answer"><input name="rb65" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) the more literal </div>
+            <div class="answer"><input name="rb65" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) the more figurative
+            </div>
+          </div>
+          <div class="style9"><strong>66. Is it harder for you to </strong>
+            <div class="answer"><input name="rb66" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) identify with others </div>
+            <div class="answer"><input name="rb66" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) utilise others
+            </div>
+          </div>
+          <div class="style9"><strong>67. Which do you wish more for yourself: </strong>
+            <div class="answer"><input name="rb67" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) clarity of reason</div>
+            <div class="answer"><input name="rb67" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) strength of compassion
+            </div>
+          </div>
+          <div class="style9"><strong>68. Which is the greater fault: </strong>
+            <div class="answer"><input name="rb68" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) being indiscriminate </div>
+            <div class="answer"><input name="rb68" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) being critical
+            </div>
+          </div>
+          <div class="style9"><strong>69. Do you prefer the </strong>
+            <div class="answer"><input name="rb69" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) planned event </div>
+            <div class="answer"><input name="rb69" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) unplanned event
+            </div>
+          </div>
+          <div class="style9"><strong>70. Do you tend to be more </strong>
+            <div class="answer"><input name="rb70" type="radio" value="a"><span class="diamond diamond-a"></span>
+              (a) deliberate than spontaneous </div>
+            <div class="answer"><input name="rb70" type="radio" value="b"><span class="diamond diamond-b"></span>
+              (b) spontaneous than deliberate
+            </div>
+          </div>
+          <p>
+            <INPUT type=button value="Get Results" name=getResults onClick="GetResults()">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <INPUT TYPE="RESET" VALUE="Reset Form" onClick="Reset()">
+          </p>
+          <p align="center" class="style4 style9"><a name="results"></a>Results</p>
+          <table width="400" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="50" bordercolor="#FFFFFF">
+                <div align="center" class="style9"><strong>E</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>I</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>S</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>N</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>T</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>F</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>J</strong></div>
+              </td>
+              <td width="50">
+                <div align="center" class="style9"><strong>P</strong></div>
+              </td>
+            </tr>
+            <tr>
+              <td bordercolor="#FFFFFF">
+                <div align="center">
+                  <input name="txtE" type="text" id="txtE" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtI" type="text" id="txtI" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtS" type="text" id="txtS" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtN" type="text" id="txtN" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtT" type="text" id="txtT" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtF" type="text" id="txtF" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtJ" type="text" id="txtJ" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtP" type="text" id="txtP" size="4" maxlength="2">
+                </div>
+              </td>
+            </tr>
+          </table>
+          <div align="center"><br />
+            Your type is:
+          </div>
+          <table width="200" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
+            <tr>
+              <td>
+                <div align="center"><span class="style9">E/I</span></div>
+              </td>
+              <td>
+                <div align="center"><span class="style9">S/N</span></div>
+              </td>
+              <td>
+                <div align="center"><span class="style9">T/F</span></div>
+              </td>
+              <td>
+                <div align="center"><span class="style9">J/P</span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div align="center">
+                  <input name="txtEI" type="text" id="txtEI" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtSN" type="text" id="txtSN" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtTF" type="text" id="txtTF" size="4" maxlength="2">
+                </div>
+              </td>
+              <td>
+                <div align="center">
+                  <input name="txtJP" type="text" id="txtJP" size="4" maxlength="2">
+                </div>
+              </td>
+            </tr>
+          </table>
+          <p>N.B. If you have an X then it means you have equal results for both members of a pair</p>
+        </form>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
