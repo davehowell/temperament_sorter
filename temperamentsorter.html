@@ -3,23 +3,140 @@
 
 <head>
   <link rel="shortcut icon" href="#">
-  <noscript>The temperament sorter requires Javascript to run and Javascript has been disabled in your current browser.</noscript>
+  <noscript>The temperament sorter requires Javascript to run and Javascript has been disabled in your current
+    browser.</noscript>
+
+    <style>
+      /**
+      * Set the colours used for the diamond-shaped radio buttons here
+      */
+      :root {
+        --diamond-unchecked: lightgrey;
+        --diamond-checked: hotpink;
+      }
+
+
+      /**
+      * Container surrounding each question
+      */
+      .question {
+        margin-top: 30px;
+        font-weight: bold;
+      }
+
+      /**
+      * Container around each answer within a question
+      * uses a label to enable screenreader and clicking on the text as well as the button
+      */
+      .answer {
+        display: block;
+        position: relative;
+        padding-left: 10px;
+        font-weight: normal;
+        margin-top: 5px;
+        margin-left: 5px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      /* Hide the browser's default radio button */
+      .answer input {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        visibility: hidden;
+        width: 25px;
+        height: 25px;
+      }
+
+      /**
+      * When hovering over any part of the answer, only affect the diamond shape
+      */
+      .answer:hover .diamond,
+      .answer:hover .diamond-true {
+        opacity: 0.5;
+      }
+
+      /**
+      * Use a custom diamond shape instead of the standard radio button
+      * Used when the radio button is NOT checked
+      * Note, "diamond" and "diamond:after" are two triangles that together make a diamond
+      */
+      .diamond {
+        margin-top: 8px;
+        width: 0;
+        height: 0;
+        display: block;
+        border: 15px solid transparent;
+        border-bottom-color: var(--diamond-unchecked);
+        position: relative;
+        top: -25px;
+        left: -10px;
+        float: left;
+      }
+
+      .diamond:after {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 15px;
+        width: 0;
+        height: 0;
+        border: 15px solid transparent;
+        border-top-color: var(--diamond-unchecked);
+      }
+
+      /**
+      * Use a custom diamond shape instead of the standard radio button
+      * Used when the radio button is checked
+      * Note, "diamond-true" and "diamond-true:after" are two triangles that together make a diamond
+      */
+      .diamond-true {
+        margin-top: 8px;
+        width: 0;
+        height: 0;
+        display: block;
+        border: 15px solid transparent;
+        border-bottom-color: var(--diamond-checked);
+        position: relative;
+        top: -25px;
+        left: -10px;
+        float: left;
+      }
+
+      .diamond-true:after {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 15px;
+        width: 0;
+        height: 0;
+        border: 15px solid transparent;
+        border-top-color: var(--diamond-checked);
+        ;
+
+      }
+    </style>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
   //jquery 3.5.1 is latest version but 1 is still available via google's CDN
   </script>
   <script>
-    // DavosCollective 2021, 2007, original 2001.
-    // This crude bit of javascript was inspired by various snippets showing how to add up a quiz based on multiple choice.
-    // Its long-winded, but works well. I am sure it could be written a lot shorter, but sometimes you just have to do things step-wise.
+    // DavosCollective 2021, 2007.
 
-    function GetResults() {  // calculates results
+    function GetResults() {
       window.name = "Keirsey";
 
-      //Initalise every variable as 0.
-      //the rb_ are radio button (they are pairs of course),
-      //the letters are for the type pairs (with X1,X2,X3,X4 in case of a tie between each pair)
+      // Initalise every variable as 0.
+      // rb_ are radio buttons,
+      // the letters are for the type pairs (with X1,X2,X3,X4 in case of a tie between each pair)
       // err and miss for counting errors and missed questions
       var E = 0, I = 0, S = 0, N = 0, T = 0, F = 0, J = 0, P = 0, X1 = 0, X2 = 0, X3 = 0, X4 = 0
+
       var rb_70 = 0, rb_69 = 0, rb_68 = 0, rb_67 = 0, rb_66 = 0, rb_65 = 0, rb_64 = 0, rb_63 = 0, rb_62 = 0, rb_61 = 0
       var rb_60 = 0, rb_59 = 0, rb_58 = 0, rb_57 = 0, rb_56 = 0, rb_55 = 0, rb_54 = 0, rb_53 = 0, rb_52 = 0, rb_51 = 0
       var rb_50 = 0, rb_49 = 0, rb_48 = 0, rb_47 = 0, rb_46 = 0, rb_45 = 0, rb_44 = 0, rb_43 = 0, rb_42 = 0, rb_41 = 0
@@ -1183,15 +1300,10 @@
       }
 
     }
-    function Reset() {  // navigates to top of form -reset is an anchor
-
-      window.name = "Keirsey";
-      open("#reset", "Keirsey");
-    }
 
 
     jQuery(document).ready(function () {
-      jQuery('.style9 input').click(function () {
+      jQuery('.answer input').click(function () {
         var ival = jQuery(this).val();
         jQuery(this).parent().find('.diamond-true').remove();
         if (ival == 'a') {
@@ -1204,652 +1316,848 @@
       });
     });
   </script>
-  <style>
-    .style9 input {
-      top: 5px;
-    }
 
-    .diamond,
-    .diamond-true {
-      margin: 5px 15px 0 0;
-    }
-  </style>
-  <style>
-    .style9 .answer {
-      position: relative;
-    }
-
-    .style9 input {
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-      width: 30px;
-      height: 30px;
-      z-index: 9999;
-      cursor: pointer;
-    }
-
-    .diamond {
-      width: 0;
-      height: 0;
-      display: block;
-      border: 15px solid transparent;
-      border-bottom-color: white;
-      position: relative;
-      top: -15px;
-      float: left;
-    }
-
-    .diamond:after {
-      content: '';
-      position: absolute;
-      left: -15px;
-      top: 15px;
-      width: 0;
-      height: 0;
-      border: 15px solid transparent;
-      border-top-color: white;
-    }
-
-    .diamond-true {
-      width: 0;
-      height: 0;
-      display: block;
-      border: 15px solid transparent;
-      border-bottom-color: gray;
-      position: relative;
-      top: -15px;
-      float: left;
-    }
-
-    .diamond-true:after {
-      content: '';
-      position: absolute;
-      left: -15px;
-      top: 15px;
-      width: 0;
-      height: 0;
-      border: 15px solid transparent;
-      border-top-color: gray;
-
-    }
-
-    .diamond:hover,
-    .diamond-true:hover {
-      opacity: 0.9;
-    }
-  </style>
 </head>
 
 <body>
-  <table width="550" border="0" cellpadding="0" cellspacing="0">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td><a name="reset"></a>
         <form name="Keirsey" id="Keirsey" method="post" action="">
-          <div class="style9"><strong>1. At a party do you</strong>
-            <div class="answer"><input name="rb1" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) interact with many, including strangers</div>
-            <div class="answer"><input name="rb1" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">1. At a party do you
+            <label class="answer">
+              <input name="rb1" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) interact with many, including strangers
+            </label>
+            <label class="answer">
+              <input name="rb1" type="radio" value="b">
+              <span class="diamond"></span>
               (b) interact with a few, known to you
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>2. Are you more</strong>
-            <div class="answer"><input name="rb2" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) realistic than speculative</div>
-            <div class="answer"><input name="rb2" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">2. Are you more
+            <label class="answer">
+              <input name="rb2" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) realistic than speculative
+            </label>
+            <label class="answer">
+              <input name="rb2" type="radio" value="b">
+              <span class="diamond"></span>
               (b) speculative than realistic
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>3. Is it worse to</strong>
-            <div class="answer"><input name="rb3" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) have your &quot;head in the clouds&quot;</div>
-            <div class="answer"><input name="rb3" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">3. Is it worse to
+            <label class="answer">
+              <input name="rb3" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) have your &quot;head in the clouds&quot;
+            </label>
+            <label class="answer">
+              <input name="rb3" type="radio" value="b">
+              <span class="diamond"></span>
               (b) be &quot;in a rut&quot;
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>4. Are you more impressed by</strong>
-            <div class="answer"><input name="rb4" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) principles</div>
-            <div class="answer"><input name="rb4" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">4. Are you more impressed by
+            <label class="answer">
+              <input name="rb4" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) principles
+            </label>
+            <label class="answer">
+              <input name="rb4" type="radio" value="b">
+              <span class="diamond"></span>
               (b) emotions
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>5. Are you more drawn towards the</strong>
-            <div class="answer"><input name="rb5" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) convincing</div>
-            <div class="answer"><input name="rb5" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">5. Are you more drawn towards the
+            <label class="answer">
+              <input name="rb5" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) convincing
+            </label>
+            <label class="answer">
+              <input name="rb5" type="radio" value="b">
+              <span class="diamond"></span>
               (b) touching
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>6. Do you prefer to work</strong>
-            <div class="answer"><input name="rb6" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) to deadlines</div>
-            <div class="answer"><input name="rb6" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">6. Do you prefer to work
+            <label class="answer">
+              <input name="rb6" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) to deadlines
+            </label>
+            <label class="answer">
+              <input name="rb6" type="radio" value="b">
+              <span class="diamond"></span>
               (b) just &quot;whenever&quot;
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>7. Do you tend to choose</strong>
-            <div class="answer"><input name="rb7" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) rather carefully </div>
-            <div class="answer"><input name="rb7" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">7. Do you tend to choose
+            <label class="answer">
+              <input name="rb7" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) rather carefully </label>
+            <label class="answer">
+              <input name="rb7" type="radio" value="b">
+              <span class="diamond"></span>
               (b) somewhat impulsively
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>8. At parties do you </strong>
-            <div class="answer"><input name="rb8" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) stay late, with increasing energy </div>
-            <div class="answer"><input name="rb8" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">8. At parties do you
+            <label class="answer">
+              <input name="rb8" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) stay late, with increasing energy </label>
+            <label class="answer">
+              <input name="rb8" type="radio" value="b">
+              <span class="diamond"></span>
               (b) leave early, with decreased energy
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>9. Are you more attracted to </strong>
-            <div class="answer"><input name="rb9" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) sensible people </div>
-            <div class="answer"><input name="rb9" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">9. Are you more attracted to
+            <label class="answer">
+              <input name="rb9" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) sensible people </label>
+            <label class="answer">
+              <input name="rb9" type="radio" value="b">
+              <span class="diamond"></span>
               (b) imaginitive people
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>10. Are you more interested in </strong>
-            <div class="answer"><input name="rb10" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) what is actual </div>
-            <div class="answer"><input name="rb10" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">10. Are you more interested in
+            <label class="answer">
+              <input name="rb10" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) what is actual </label>
+            <label class="answer">
+              <input name="rb10" type="radio" value="b">
+              <span class="diamond"></span>
               (b) what is possible
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>11. In judging others are you more swayed by </strong>
-            <div class="answer"><input name="rb11" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) laws than circumstances </div>
-            <div class="answer"><input name="rb11" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">11. In judging others are you more swayed by
+            <label class="answer">
+              <input name="rb11" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) laws than circumstances </label>
+            <label class="answer">
+              <input name="rb11" type="radio" value="b">
+              <span class="diamond"></span>
               (b) circumstances than laws
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>12. In approaching others is your inclination to be somewhat </strong>
-            <div class="answer"><input name="rb12" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) objective </div>
-            <div class="answer"><input name="rb12" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">12. In approaching others is your inclination to be somewhat
+            <label class="answer">
+              <input name="rb12" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) objective </label>
+            <label class="answer">
+              <input name="rb12" type="radio" value="b">
+              <span class="diamond"></span>
               (b) personal
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>13. Are you more </strong>
-            <div class="answer"><input name="rb13" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) punctual </div>
-            <div class="answer"><input name="rb13" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">13. Are you more
+            <label class="answer">
+              <input name="rb13" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) punctual </label>
+            <label class="answer">
+              <input name="rb13" type="radio" value="b">
+              <span class="diamond"></span>
               (b) leisurely
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>14. Does it bother you more having things </strong>
-            <div class="answer"><input name="rb14" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) incomplete </div>
-            <div class="answer"><input name="rb14" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">14. Does it bother you more having things
+            <label class="answer">
+              <input name="rb14" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) incomplete </label>
+            <label class="answer">
+              <input name="rb14" type="radio" value="b">
+              <span class="diamond"></span>
               (b) completed
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>15. In your social groups do you </strong>
-            <div class="answer"><input name="rb15" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) keep abreast of other's happenings </div>
-            <div class="answer"><input name="rb15" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">15. In your social groups do you
+            <label class="answer">
+              <input name="rb15" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) keep abreast of other's happenings </label>
+            <label class="answer">
+              <input name="rb15" type="radio" value="b">
+              <span class="diamond"></span>
               (b) get behind on the news
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>16. In doing ordinary things are you more likely to </strong>
-            <div class="answer"><input name="rb16" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) do it the usual way </div>
-            <div class="answer"><input name="rb16" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">16. In doing ordinary things are you more likely to
+            <label class="answer">
+              <input name="rb16" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) do it the usual way </label>
+            <label class="answer">
+              <input name="rb16" type="radio" value="b">
+              <span class="diamond"></span>
               (b) do it your own way
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>17. Writers should </strong>
-            <div class="answer"><input name="rb17" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) &quot;say what they mean and mean what they say&quot; </div>
-            <div class="answer"><input name="rb17" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">17. Writers should
+            <label class="answer">
+              <input name="rb17" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) &quot;say what they mean and mean what they say&quot; </label>
+            <label class="answer">
+              <input name="rb17" type="radio" value="b">
+              <span class="diamond"></span>
               (b) express things more by use of analogy
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>18. Which appeals to you more </strong>
-            <div class="answer"><input name="rb18" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) consistency of thought </div>
-            <div class="answer"><input name="rb18" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">18. Which appeals to you more
+            <label class="answer">
+              <input name="rb18" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) consistency of thought </label>
+            <label class="answer">
+              <input name="rb18" type="radio" value="b">
+              <span class="diamond"></span>
               (b) harmonious human relationships
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>19. Are you more comfortable in making </strong>
-            <div class="answer"><input name="rb19" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) logical judgements </div>
-            <div class="answer"><input name="rb19" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">19. Are you more comfortable in making
+            <label class="answer">
+              <input name="rb19" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) logical judgements </label>
+            <label class="answer">
+              <input name="rb19" type="radio" value="b">
+              <span class="diamond"></span>
               (b) value judgements
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>20. Do you want things </strong>
-            <div class="answer"><input name="rb20" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) settled and decided </div>
-            <div class="answer"><input name="rb20" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">20. Do you want things
+            <label class="answer">
+              <input name="rb20" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) settled and decided </label>
+            <label class="answer">
+              <input name="rb20" type="radio" value="b">
+              <span class="diamond"></span>
               (b) unsettled and undecided
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>21. Would you say you are more </strong>
-            <div class="answer"><input name="rb21" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) serious and determined </div>
-            <div class="answer"><input name="rb21" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">21. Would you say you are more
+            <label class="answer">
+              <input name="rb21" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) serious and determined </label>
+            <label class="answer">
+              <input name="rb21" type="radio" value="b">
+              <span class="diamond"></span>
               (b) easy-going
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>22. In phoning do you </strong>
-            <div class="answer"><input name="rb22" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) rarely question that it will all be said </div>
-            <div class="answer"><input name="rb22" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">22. In phoning do you
+            <label class="answer">
+              <input name="rb22" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) rarely question that it will all be said </label>
+            <label class="answer">
+              <input name="rb22" type="radio" value="b">
+              <span class="diamond"></span>
               (b) rehearse what you'll say
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>23. Facts </strong>
-            <div class="answer"><input name="rb23" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) &quot;speak for themselves&quot; </div>
-            <div class="answer"><input name="rb23" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">23. Facts
+            <label class="answer">
+              <input name="rb23" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) &quot;speak for themselves&quot; </label>
+            <label class="answer">
+              <input name="rb23" type="radio" value="b">
+              <span class="diamond"></span>
               (b) illustrate principles
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>24. Are visionaries </strong>
-            <div class="answer"><input name="rb24" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) somewhat annoying </div>
-            <div class="answer"><input name="rb24" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">24. Are visionaries
+            <label class="answer">
+              <input name="rb24" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) somewhat annoying </label>
+            <label class="answer">
+              <input name="rb24" type="radio" value="b">
+              <span class="diamond"></span>
               (b) rather fascinating
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>25. Are you more often </strong>
-            <div class="answer"><input name="rb25" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) a cool-headed person </div>
-            <div class="answer"><input name="rb25" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">25. Are you more often
+            <label class="answer">
+              <input name="rb25" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) a cool-headed person </label>
+            <label class="answer">
+              <input name="rb25" type="radio" value="b">
+              <span class="diamond"></span>
               (b) a warm-hearted person
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>26. Is it worse to be </strong>
-            <div class="answer"><input name="rb26" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) unjust </div>
-            <div class="answer"><input name="rb26" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">26. Is it worse to be
+            <label class="answer">
+              <input name="rb26" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) unjust </label>
+            <label class="answer">
+              <input name="rb26" type="radio" value="b">
+              <span class="diamond"></span>
               (b) merciless
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>27. Should one usually let events occur </strong>
-            <div class="answer"><input name="rb27" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) by careful selection and choice </div>
-            <div class="answer"><input name="rb27" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">27. Should one usually let events occur
+            <label class="answer">
+              <input name="rb27" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) by careful selection and choice </label>
+            <label class="answer">
+              <input name="rb27" type="radio" value="b">
+              <span class="diamond"></span>
               (b) randomly and by chance
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>28. Do you feel better about </strong>
-            <div class="answer"><input name="rb28" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) having purchased </div>
-            <div class="answer"><input name="rb28" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">28. Do you feel better about
+            <label class="answer">
+              <input name="rb28" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) having purchased </label>
+            <label class="answer">
+              <input name="rb28" type="radio" value="b">
+              <span class="diamond"></span>
               (b) having the option to buy
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>29. In company do you </strong>
-            <div class="answer"><input name="rb29" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) initiate conversation </div>
-            <div class="answer"><input name="rb29" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">29. In company do you
+            <label class="answer">
+              <input name="rb29" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) initiate conversation </label>
+            <label class="answer">
+              <input name="rb29" type="radio" value="b">
+              <span class="diamond"></span>
               (b) wait to be approached
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>30. Common sense is </strong>
-            <div class="answer"><input name="rb30" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) rarely questionable </div>
-            <div class="answer"><input name="rb30" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">30. Common sense is
+            <label class="answer">
+              <input name="rb30" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) rarely questionable </label>
+            <label class="answer">
+              <input name="rb30" type="radio" value="b">
+              <span class="diamond"></span>
               (b) frequently questionable
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>31.Children often do not </strong>
-            <div class="answer"><input name="rb31" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) make themselves useful enough </div>
-            <div class="answer"><input name="rb31" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">31.Children often do not
+            <label class="answer">
+              <input name="rb31" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) make themselves useful enough </label>
+            <label class="answer">
+              <input name="rb31" type="radio" value="b">
+              <span class="diamond"></span>
               (b) exercise their fantasy enough
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>32. In making decisions do you feel more comfortable with </strong>
-            <div class="answer"><input name="rb32" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) standards </div>
-            <div class="answer"><input name="rb32" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">32. In making decisions do you feel more comfortable with
+            <label class="answer">
+              <input name="rb32" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) standards </label>
+            <label class="answer">
+              <input name="rb32" type="radio" value="b">
+              <span class="diamond"></span>
               (b) feelings
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>33. Are you more </strong>
-            <div class="answer"><input name="rb33" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) firm than gentle </div>
-            <div class="answer"><input name="rb33" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">33. Are you more
+            <label class="answer">
+              <input name="rb33" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) firm than gentle </label>
+            <label class="answer">
+              <input name="rb33" type="radio" value="b">
+              <span class="diamond"></span>
               (b) gentle than firm
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>34. Which is more admirable </strong>
-            <div class="answer"><input name="rb34" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) the ability to organise and be methodical </div>
-            <div class="answer"><input name="rb34" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">34. Which is more admirable
+            <label class="answer">
+              <input name="rb34" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) the ability to organise and be methodical </label>
+            <label class="answer">
+              <input name="rb34" type="radio" value="b">
+              <span class="diamond"></span>
               (b) the ability to adapt and make do
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>35. Do you put more value on the </strong>
-            <div class="answer"><input name="rb35" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) definite </div>
-            <div class="answer"><input name="rb35" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">35. Do you put more value on the
+            <label class="answer">
+              <input name="rb35" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) definite </label>
+            <label class="answer">
+              <input name="rb35" type="radio" value="b">
+              <span class="diamond"></span>
               (b) open-ended
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>36. Does new and non-routine interaction with others </strong>
-            <div class="answer"><input name="rb36" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) stimulate and energise you </div>
-            <div class="answer"><input name="rb36" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">36. Does new and non-routine interaction with others
+            <label class="answer">
+              <input name="rb36" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) stimulate and energise you </label>
+            <label class="answer">
+              <input name="rb36" type="radio" value="b">
+              <span class="diamond"></span>
               (b) tax your reserves
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>37. Are you more frequently</strong>
-            <div class="answer"><input name="rb37" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) a practical sort of person </div>
-            <div class="answer"><input name="rb37" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">37. Are you more frequently
+            <label class="answer">
+              <input name="rb37" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) a practical sort of person </label>
+            <label class="answer">
+              <input name="rb37" type="radio" value="b">
+              <span class="diamond"></span>
               (b) a fanciful sort of person
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>38. Are you more likely to</strong>
-            <div class="answer"><input name="rb38" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) see how others are useful </div>
-            <div class="answer"><input name="rb38" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">38. Are you more likely to
+            <label class="answer">
+              <input name="rb38" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) see how others are useful </label>
+            <label class="answer">
+              <input name="rb38" type="radio" value="b">
+              <span class="diamond"></span>
               (b) see how others see
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>39. Which is more satisfying:</strong>
-            <div class="answer"><input name="rb39" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) to discuss an issue thoroughly</div>
-            <div class="answer"><input name="rb39" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">39. Which is more satisfying:
+            <label class="answer">
+              <input name="rb39" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) to discuss an issue thoroughly
+            </label>
+            <label class="answer">
+              <input name="rb39" type="radio" value="b">
+              <span class="diamond"></span>
               (b) to arrive at agreement on an issue
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>40.Which rules you more: </strong>
-            <div class="answer"><input name="rb40" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) your head </div>
-            <div class="answer"><input name="rb40" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">40.Which rules you more:
+            <label class="answer">
+              <input name="rb40" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) your head </label>
+            <label class="answer">
+              <input name="rb40" type="radio" value="b">
+              <span class="diamond"></span>
               (b) your heart
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>41. Are you more comfortable with work that is </strong>
-            <div class="answer"><input name="rb41" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) contracted </div>
-            <div class="answer"><input name="rb41" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">41. Are you more comfortable with work that is
+            <label class="answer">
+              <input name="rb41" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) contracted </label>
+            <label class="answer">
+              <input name="rb41" type="radio" value="b">
+              <span class="diamond"></span>
               (b) done on a casual basis
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>42. Do you tend to look for </strong>
-            <div class="answer"><input name="rb42" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) the orderly </div>
-            <div class="answer"><input name="rb42" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">42. Do you tend to look for
+            <label class="answer">
+              <input name="rb42" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) the orderly </label>
+            <label class="answer">
+              <input name="rb42" type="radio" value="b">
+              <span class="diamond"></span>
               (b) whatever turns up
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>43. Do you prefer </strong>
-            <div class="answer"><input name="rb43" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) many friends with brief contact </div>
-            <div class="answer"><input name="rb43" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">43. Do you prefer
+            <label class="answer">
+              <input name="rb43" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) many friends with brief contact </label>
+            <label class="answer">
+              <input name="rb43" type="radio" value="b">
+              <span class="diamond"></span>
               (b) a few friends with more lengthy contact
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>44. Do you go more by </strong>
-            <div class="answer"><input name="rb44" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) facts </div>
-            <div class="answer"><input name="rb44" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">44. Do you go more by
+            <label class="answer">
+              <input name="rb44" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) facts </label>
+            <label class="answer">
+              <input name="rb44" type="radio" value="b">
+              <span class="diamond"></span>
               (b) principles
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>45. Are you more interested in </strong>
-            <div class="answer"><input name="rb45" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) production and distribution </div>
-            <div class="answer"><input name="rb45" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">45. Are you more interested in
+            <label class="answer">
+              <input name="rb45" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) production and distribution </label>
+            <label class="answer">
+              <input name="rb45" type="radio" value="b">
+              <span class="diamond"></span>
               (b) design and research
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>46. Which is more of a compliment </strong>
-            <div class="answer"><input name="rb46" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) &quot;There is a very logical person.&quot; </div>
-            <div class="answer"><input name="rb46" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">46. Which is more of a compliment
+            <label class="answer">
+              <input name="rb46" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) &quot;There is a very logical person.&quot; </label>
+            <label class="answer">
+              <input name="rb46" type="radio" value="b">
+              <span class="diamond"></span>
               (b) &quot;There is a very sentimental person.&quot;
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>47. Do you value in yourself more that you are </strong>
-            <div class="answer"><input name="rb47" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) unwavering</div>
-            <div class="answer"><input name="rb47" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">47. Do you value in yourself more that you are
+            <label class="answer">
+              <input name="rb47" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) unwavering
+            </label>
+            <label class="answer">
+              <input name="rb47" type="radio" value="b">
+              <span class="diamond"></span>
               (b) devoted
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>48. Do you more often prefer the </strong>
-            <div class="answer"><input name="rb48" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) final and unalterable statement </div>
-            <div class="answer"><input name="rb48" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">48. Do you more often prefer the
+            <label class="answer">
+              <input name="rb48" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) final and unalterable statement </label>
+            <label class="answer">
+              <input name="rb48" type="radio" value="b">
+              <span class="diamond"></span>
               (b) tentative and preliminary statement
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>49. Are you more comfortable </strong>
-            <div class="answer"><input name="rb49" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) after a decision </div>
-            <div class="answer"><input name="rb49" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">49. Are you more comfortable
+            <label class="answer">
+              <input name="rb49" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) after a decision </label>
+            <label class="answer">
+              <input name="rb49" type="radio" value="b">
+              <span class="diamond"></span>
               (b) before a decision
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>50. Do you </strong>
-            <div class="answer"><input name="rb50" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) speak easily and at length with strangers </div>
-            <div class="answer"><input name="rb50" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">50. Do you
+            <label class="answer">
+              <input name="rb50" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) speak easily and at length with strangers </label>
+            <label class="answer">
+              <input name="rb50" type="radio" value="b">
+              <span class="diamond"></span>
               (b) find little to say to strangers
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>51. Are you more likely to trust your </strong>
-            <div class="answer"><input name="rb51" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) experience </div>
-            <div class="answer"><input name="rb51" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">51. Are you more likely to trust your
+            <label class="answer">
+              <input name="rb51" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) experience </label>
+            <label class="answer">
+              <input name="rb51" type="radio" value="b">
+              <span class="diamond"></span>
               (b) hunch
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>52. Do you feel </strong>
-            <div class="answer"><input name="rb52" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) more practical than ingenious </div>
-            <div class="answer"><input name="rb52" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">52. Do you feel
+            <label class="answer">
+              <input name="rb52" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) more practical than ingenious </label>
+            <label class="answer">
+              <input name="rb52" type="radio" value="b">
+              <span class="diamond"></span>
               (b) more ingenious than practical
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>53. Which person is more to be complimented: one of </strong>
-            <div class="answer"><input name="rb53" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) clear reason </div>
-            <div class="answer"><input name="rb53" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">53. Which person is more to be complimented: one of
+            <label class="answer">
+              <input name="rb53" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) clear reason </label>
+            <label class="answer">
+              <input name="rb53" type="radio" value="b">
+              <span class="diamond"></span>
               (b) strong feeling
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>54. Are you inclined more to be </strong>
-            <div class="answer"><input name="rb54" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) fair-minded </div>
-            <div class="answer"><input name="rb54" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">54. Are you inclined more to be
+            <label class="answer">
+              <input name="rb54" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) fair-minded </label>
+            <label class="answer">
+              <input name="rb54" type="radio" value="b">
+              <span class="diamond"></span>
               (b) sympathetic
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>55. Is it preferable mostly to </strong>
-            <div class="answer"><input name="rb55" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) make sure things are arranged </div>
-            <div class="answer"><input name="rb55" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">55. Is it preferable mostly to
+            <label class="answer">
+              <input name="rb55" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) make sure things are arranged </label>
+            <label class="answer">
+              <input name="rb55" type="radio" value="b">
+              <span class="diamond"></span>
               (b) just let things happen
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>56. In relationships should most things be </strong>
-            <div class="answer"><input name="rb56" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) renegotiable </div>
-            <div class="answer"><input name="rb56" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">56. In relationships should most things be
+            <label class="answer">
+              <input name="rb56" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) renegotiable </label>
+            <label class="answer">
+              <input name="rb56" type="radio" value="b">
+              <span class="diamond"></span>
               (b) random and circumstantial
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>57. When the phone rings do you </strong>
-            <div class="answer"><input name="rb57" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) hasten to get it first </div>
-            <div class="answer"><input name="rb57" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">57. When the phone rings do you
+            <label class="answer">
+              <input name="rb57" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) hasten to get it first </label>
+            <label class="answer">
+              <input name="rb57" type="radio" value="b">
+              <span class="diamond"></span>
               (b) hope someone else will answer it
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>58. Do you prize more in yourself </strong>
-            <div class="answer"><input name="rb58" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) a strong sense of reality </div>
-            <div class="answer"><input name="rb58" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">58. Do you prize more in yourself
+            <label class="answer">
+              <input name="rb58" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) a strong sense of reality </label>
+            <label class="answer">
+              <input name="rb58" type="radio" value="b">
+              <span class="diamond"></span>
               (b) a vivid imagination
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>59. Are you drawn more to </strong>
-            <div class="answer"><input name="rb59" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) fundamentals </div>
-            <div class="answer"><input name="rb59" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">59. Are you drawn more to
+            <label class="answer">
+              <input name="rb59" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) fundamentals </label>
+            <label class="answer">
+              <input name="rb59" type="radio" value="b">
+              <span class="diamond"></span>
               (b) overtones
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>60. Which seems the greater error: </strong>
-            <div class="answer"><input name="rb60" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) to be too passionate </div>
-            <div class="answer"><input name="rb60" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">60. Which seems the greater error:
+            <label class="answer">
+              <input name="rb60" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) to be too passionate </label>
+            <label class="answer">
+              <input name="rb60" type="radio" value="b">
+              <span class="diamond"></span>
               (b) to be too objective
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>61. Do you see yourself as basically </strong>
-            <div class="answer"><input name="rb61" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) hard-headed </div>
-            <div class="answer"><input name="rb61" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">61. Do you see yourself as basically
+            <label class="answer">
+              <input name="rb61" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) hard-headed </label>
+            <label class="answer">
+              <input name="rb61" type="radio" value="b">
+              <span class="diamond"></span>
               (b) soft-hearted
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>62. Which situation appeals to you more </strong>
-            <div class="answer"><input name="rb62" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) the structured and scheduled </div>
-            <div class="answer"><input name="rb62" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">62. Which situation appeals to you more
+            <label class="answer">
+              <input name="rb62" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) the structured and scheduled </label>
+            <label class="answer">
+              <input name="rb62" type="radio" value="b">
+              <span class="diamond"></span>
               (b) the unstructured and unscheduled
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>63. Are you a person that is more </strong>
-            <div class="answer"><input name="rb63" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) routinised than whimsical </div>
-            <div class="answer"><input name="rb63" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">63. Are you a person that is more
+            <label class="answer">
+              <input name="rb63" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) routinised than whimsical </label>
+            <label class="answer">
+              <input name="rb63" type="radio" value="b">
+              <span class="diamond"></span>
               (b) whimsical than routinised
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>64. Are you inclined to be </strong>
-            <div class="answer"><input name="rb64" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) easy to approach </div>
-            <div class="answer"><input name="rb64" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">64. Are you inclined to be
+            <label class="answer">
+              <input name="rb64" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) easy to approach </label>
+            <label class="answer">
+              <input name="rb64" type="radio" value="b">
+              <span class="diamond"></span>
               (b) somewhat reserved
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>65. In writings do you prefer </strong>
-            <div class="answer"><input name="rb65" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) the more literal </div>
-            <div class="answer"><input name="rb65" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">65. In writings do you prefer
+            <label class="answer">
+              <input name="rb65" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) the more literal </label>
+            <label class="answer">
+              <input name="rb65" type="radio" value="b">
+              <span class="diamond"></span>
               (b) the more figurative
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>66. Is it harder for you to </strong>
-            <div class="answer"><input name="rb66" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) identify with others </div>
-            <div class="answer"><input name="rb66" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">66. Is it harder for you to
+            <label class="answer">
+              <input name="rb66" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) identify with others </label>
+            <label class="answer">
+              <input name="rb66" type="radio" value="b">
+              <span class="diamond"></span>
               (b) utilise others
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>67. Which do you wish more for yourself: </strong>
-            <div class="answer"><input name="rb67" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) clarity of reason</div>
-            <div class="answer"><input name="rb67" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">67. Which do you wish more for yourself:
+            <label class="answer">
+              <input name="rb67" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) clarity of reason
+            </label>
+            <label class="answer">
+              <input name="rb67" type="radio" value="b">
+              <span class="diamond"></span>
               (b) strength of compassion
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>68. Which is the greater fault: </strong>
-            <div class="answer"><input name="rb68" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) being indiscriminate </div>
-            <div class="answer"><input name="rb68" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">68. Which is the greater fault:
+            <label class="answer">
+              <input name="rb68" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) being indiscriminate </label>
+            <label class="answer">
+              <input name="rb68" type="radio" value="b">
+              <span class="diamond"></span>
               (b) being critical
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>69. Do you prefer the </strong>
-            <div class="answer"><input name="rb69" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) planned event </div>
-            <div class="answer"><input name="rb69" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">69. Do you prefer the
+            <label class="answer">
+              <input name="rb69" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) planned event </label>
+            <label class="answer">
+              <input name="rb69" type="radio" value="b">
+              <span class="diamond"></span>
               (b) unplanned event
-            </div>
+            </label>
           </div>
-          <div class="style9"><strong>70. Do you tend to be more </strong>
-            <div class="answer"><input name="rb70" type="radio" value="a"><span class="diamond diamond-a"></span>
-              (a) deliberate than spontaneous </div>
-            <div class="answer"><input name="rb70" type="radio" value="b"><span class="diamond diamond-b"></span>
+          <div class="question">70. Do you tend to be more
+            <label class="answer">
+              <input name="rb70" type="radio" value="a">
+              <span class="diamond"></span>
+              (a) deliberate than spontaneous </label>
+            <label class="answer">
+              <input name="rb70" type="radio" value="b">
+              <span class="diamond"></span>
               (b) spontaneous than deliberate
-            </div>
+            </label>
           </div>
           <p>
             <INPUT type=button value="Get Results" name=getResults onClick="GetResults()">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <INPUT TYPE="RESET" VALUE="Reset Form" onClick="Reset()">
           </p>
-          <p align="center" class="style4 style9"><a name="results"></a>Results</p>
+          <p align="center" class="question"><a name="results"></a>Results</p>
           <table width="400" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
               <td width="50" bordercolor="#FFFFFF">
-                <div align="center" class="style9"><strong>E</strong></div>
+                <div align="center" class="question">E</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>I</strong></div>
+                <div align="center" class="question">I</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>S</strong></div>
+                <div align="center" class="question">S</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>N</strong></div>
+                <div align="center" class="question">N</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>T</strong></div>
+                <div align="center" class="question">T</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>F</strong></div>
+                <div align="center" class="question">F</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>J</strong></div>
+                <div align="center" class="question">J</div>
               </td>
               <td width="50">
-                <div align="center" class="style9"><strong>P</strong></div>
+                <div align="center" class="question">P</div>
               </td>
             </tr>
             <tr>
               <td bordercolor="#FFFFFF">
-                <div align="center">
-                  <input name="txtE" type="text" id="txtE" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtE" type="text" id="txtE" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtI" type="text" id="txtI" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtI" type="text" id="txtI" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtS" type="text" id="txtS" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtS" type="text" id="txtS" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtN" type="text" id="txtN" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtN" type="text" id="txtN" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtT" type="text" id="txtT" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtT" type="text" id="txtT" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtF" type="text" id="txtF" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtF" type="text" id="txtF" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtJ" type="text" id="txtJ" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtJ" type="text" id="txtJ" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtP" type="text" id="txtP" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtP" type="text" id="txtP" size="4" maxlength="2"> </div>
               </td>
             </tr>
           </table>
@@ -1859,38 +2167,30 @@
           <table width="200" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
             <tr>
               <td>
-                <div align="center"><span class="style9">E/I</span></div>
+                <div align="center"><span class="question">E/I</span></div>
               </td>
               <td>
-                <div align="center"><span class="style9">S/N</span></div>
+                <div align="center"><span class="question">S/N</span></div>
               </td>
               <td>
-                <div align="center"><span class="style9">T/F</span></div>
+                <div align="center"><span class="question">T/F</span></div>
               </td>
               <td>
-                <div align="center"><span class="style9">J/P</span></div>
+                <div align="center"><span class="question">J/P</span></div>
               </td>
             </tr>
             <tr>
               <td>
-                <div align="center">
-                  <input name="txtEI" type="text" id="txtEI" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtEI" type="text" id="txtEI" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtSN" type="text" id="txtSN" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtSN" type="text" id="txtSN" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtTF" type="text" id="txtTF" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtTF" type="text" id="txtTF" size="4" maxlength="2"> </div>
               </td>
               <td>
-                <div align="center">
-                  <input name="txtJP" type="text" id="txtJP" size="4" maxlength="2">
-                </div>
+                <div align="center"> <input name="txtJP" type="text" id="txtJP" size="4" maxlength="2"> </div>
               </td>
             </tr>
           </table>
@@ -1899,6 +2199,7 @@
       </td>
     </tr>
   </table>
+
 </body>
 
 </html>
